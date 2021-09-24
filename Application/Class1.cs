@@ -1,6 +1,8 @@
-﻿
-namespace Application;
-public class Class1
-{
+﻿using System;
 
+namespace Application
+{
+    public class Class1
+    {
+    }
 }

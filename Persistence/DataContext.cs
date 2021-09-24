@@ -1,17 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Domain;
-namespace Persistence;
+﻿using Domain;
+using Microsoft.EntityFrameworkCore;
+using System;
 
-public class DataContext : DbContext
+namespace Persistence
 {
-    public DataContext()
+    public class DataContext : DbContext
     {
+        public DataContext()
+        {
+        }
+
+        public DataContext(DbContextOptions options) : base(options)
+        {
+
+        }
+
+        public DbSet<Order> Orders { get; set; }
     }
-
-    public DataContext(DbContextOptions options) : base(options)
-    {
-
-    }
-
-    public DbSet<Order> Orders { get; set; }
 }

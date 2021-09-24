@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
+    /// <summary>
+    /// Продукт (товар), который в продаже.
+    /// </summary>
     public class Product
     {
         public int Id { get; set; }
@@ -13,6 +12,8 @@ namespace Domain
         public string Name { get; set; }
         public string ImagePath { get; set; }
         public FirstLevelImageSection FirstLevelImageSection { get; set; }
+        public int SecondLevelSectionId { get; set; }
+        [ForeignKey(nameof(SecondLevelSectionId))]
         public SecondLevelSection SecondLevelSection { get; set; }
     }
 }
