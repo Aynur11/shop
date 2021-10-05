@@ -2,10 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,6 +11,7 @@ namespace Application.Orders
     public class GetAll
     {
         public class Query : IRequest<List<Order>> { }
+
         public class Handler : IRequestHandler<Query, List<Order>>
         {
             readonly DataContext _context;
@@ -21,6 +19,7 @@ namespace Application.Orders
             {
                 _context = context;
             }
+
             public async Task<List<Order>> Handle(Query request, CancellationToken cancellationToken)
             {
                 return await _context.Orders.ToListAsync(cancellationToken: cancellationToken);
