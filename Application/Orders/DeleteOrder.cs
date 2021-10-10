@@ -8,12 +8,12 @@ namespace Application.Orders
 {
     public class DeleteOrder
     {
-        public class Query : IRequest<Order>
+        public class Command : IRequest<Order>
         {
             public int Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Order>
+        public class Handler : IRequestHandler<Command, Order>
         {
             private readonly DataContext _context;
 
@@ -22,7 +22,7 @@ namespace Application.Orders
                 _context = context;
             }
 
-            public async Task<Order> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Order> Handle(Command request, CancellationToken cancellationToken)
             {
                 var order = await _context.Orders.FindAsync(request.Id, cancellationToken);
                 _context.Orders.Remove(order);
