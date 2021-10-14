@@ -12,12 +12,12 @@ namespace Application.Orders
 {
     public class UpdateOrder
     {
-        public class Command : IRequest<Order>
+        public class Command : IRequest
         {
             public Order Order { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Order>
+        public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
 
@@ -26,11 +26,11 @@ namespace Application.Orders
                 _context = context;
             }
 
-            public async Task<Order> Handle(Command request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
                 _context.Update(request.Order);
                 await _context.SaveChangesAsync(cancellationToken);
-                return request.Order;
+                return Unit.Value;
             }
         }
     }
