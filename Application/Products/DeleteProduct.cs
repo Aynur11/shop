@@ -1,16 +1,15 @@
-﻿using Domain;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using MediatR;
 using Persistence;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Application.Orders
+namespace Application.Products
 {
-    public class CreateProduct
+    public class DeleteProduct
     {
         public class Command : IRequest
         {
-            public Order Order { get; set; }
+            public int Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -24,7 +23,8 @@ namespace Application.Orders
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                await _context.Orders.AddAsync(request.Order, cancellationToken);
+                var product = await _context.Products.FindAsync(request.Id, cancellationToken);
+                _context.Products.Remove(product);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }
