@@ -1,8 +1,10 @@
 using Application.Core;
 using Application.Orders;
+using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,6 +39,11 @@ namespace API
 
             services.AddMediatR(typeof(GetAll.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+
+            var builder = services.AddIdentityCore<ApplicationUser>();
+            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            identityBuilder.AddEntityFrameworkStores<DataContext>();
+            identityBuilder.AddSignInManager<SignInManager<ApplicationUser>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
