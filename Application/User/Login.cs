@@ -55,12 +55,10 @@ namespace Application.User
                 if (signInResult.IsNotAllowed)
                 {
                     throw new LoginException(LoginStatusCodes.SignInIsNotAllowed, "Аутентификация не разрешена.");
-
                 }
                 if (signInResult.RequiresTwoFactor)
                 {
                     throw new LoginException(LoginStatusCodes.RequiresTwoFactor, "Требуется двухфакторная аутентификация.");
-
                 }
 
                 throw new LoginException(LoginStatusCodes.UndefinedProblem, "При выполнении аутентификации что-то пошло не так.");

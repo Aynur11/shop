@@ -3,6 +3,7 @@ using MediatR;
 using Persistence;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Exceptions;
 
 namespace Application.Orders
 {
@@ -21,10 +22,9 @@ namespace Application.Orders
                 _context = context;
             }
 
-            public async Task<Order> Handle(Query request, CancellationToken cancellationToken)
-            {
-                return await _context.Orders.FindAsync(request.Id, cancellationToken);
-            }
+            public async Task<Order> Handle(Query request, CancellationToken cancellationToken) =>
+                await _context.Orders.FindAsync(request.Id, cancellationToken) ?? 
+                throw new EntityNotFoundException($"Заказ {request.Id} не найден");
         }
     }
 }
