@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -8,7 +9,7 @@ namespace Domain
     public class Order
     {
         public int Id { get; set; }
-        public Product Product { get; set; }
+        public List<Product> Products { get; set; }
         public DateTime OrderTime { get; set; }
     }
 }

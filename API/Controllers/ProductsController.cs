@@ -1,5 +1,5 @@
-﻿using Application.Products;
-using Domain;
+﻿using Application.DTO;
+using Application.Products;
 using Microsoft.AspNetCore.Mvc;
 using Persistence;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<List<Product>> GetProductsAsync()
+        public async Task<List<ProductDto>> GetProductsAsync()
         {
             GetAllProducts.Handler handler = new GetAllProducts.Handler(context);
             return await handler.Handle(new GetAllProducts.Query(), new CancellationToken());
