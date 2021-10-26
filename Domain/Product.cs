@@ -14,6 +14,7 @@ namespace Domain
         public FirstLevelImageSection FirstLevelImageSection { get; set; }
         public int SecondLevelSectionId { get; set; }
         [ForeignKey(nameof(SecondLevelSectionId))]
+        public int QuantityInStock { get; set; }
         public SecondLevelSection SecondLevelSection { get; set; }
     }
 }
