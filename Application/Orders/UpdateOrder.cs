@@ -19,9 +19,9 @@ namespace Application.Orders
 
         public class Handler : IRequestHandler<Command>
         {
-            private readonly DataContext _context;
+            private readonly IDataContext _context;
 
-            public Handler(DataContext context)
+            public Handler(IDataContext context)
             {
                 _context = context;
             }

@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-using Application.DTO;
+﻿using Application.DTO;
 using AutoMapper;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Products
 {

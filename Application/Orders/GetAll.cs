@@ -16,9 +16,9 @@ namespace Application.Orders
 
         public class Handler : IRequestHandler<Query, List<OrderDto>>
         {
-            readonly DataContext _context;
+            readonly IDataContext _context;
             readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper)
+            public Handler(IDataContext context, IMapper mapper)
             {
                 _context = context;
                 _mapper = mapper;
