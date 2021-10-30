@@ -16,9 +16,9 @@ namespace Application.Products
 
         public class Handler : IRequestHandler<Query, List<ProductDto>>
         {
-            readonly DataContext _context;
+            readonly IDataContext _context;
             readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper)
+            public Handler(IDataContext context, IMapper mapper)
             {
                 _context = context;
                 _mapper = mapper;

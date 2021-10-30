@@ -19,9 +19,10 @@ namespace Application.Products
         {
             readonly DataContext _context;
             readonly IMapper _mapper;
-            public Handler(DataContext context)
+            public Handler(DataContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
 
             public async Task<ProductDto> Handle(Query request, CancellationToken cancellationToken)

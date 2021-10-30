@@ -17,11 +17,12 @@ namespace Application.Orders
 
         public class Handler : IRequestHandler<Query, OrderDto>
         {
-            readonly DataContext _context;
+            readonly IDataContext _context;
             readonly IMapper _mapper;
-            public Handler(DataContext context)
+            public Handler(IDataContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
 
             public async Task<OrderDto> Handle(Query request, CancellationToken cancellationToken)

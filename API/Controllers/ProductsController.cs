@@ -13,9 +13,9 @@ namespace API.Controllers
     [Route("[controller]")]
     public class ProductsController : BaseApiController
     {
-        private DataContext _context;
-        private IMapper _mapper;
-        public ProductsController(DataContext context, IMapper mapper)
+        private readonly IDataContext _context;
+        private readonly IMapper _mapper;
+        public ProductsController(IDataContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;

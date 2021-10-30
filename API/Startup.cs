@@ -37,6 +37,8 @@ namespace API
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            services.AddTransient<IDataContext, DataContext>();
+
             services.AddMediatR(typeof(GetAll.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             

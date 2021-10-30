@@ -18,9 +18,10 @@ namespace Application.Orders
         {
             readonly DataContext _context;
             readonly IMapper _mapper;
-            public Handler(DataContext context)
+            public Handler(DataContext context, IMapper mapper)
             {
                 _context = context;
+                _mapper = mapper;
             }
 
             public async Task<List<OrderDto>> Handle(Query request, CancellationToken cancellationToken)
