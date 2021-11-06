@@ -1,8 +1,8 @@
 ﻿using Application.DTO;
 using Application.Exceptions;
+using Application.Interfaces;
 using AutoMapper;
 using MediatR;
-using Persistence;
 using System.Threading;
 using System.Threading.Tasks;
 

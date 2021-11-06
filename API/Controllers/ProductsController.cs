@@ -1,8 +1,8 @@
 ﻿using Application.DTO;
+using Application.Interfaces;
 using Application.Products;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Persistence;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;

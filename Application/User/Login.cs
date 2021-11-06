@@ -1,8 +1,6 @@
-﻿using System;
-using Domain;
+﻿using Domain;
 using FluentValidation;
 using MediatR;
-using Persistence;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
@@ -41,6 +39,11 @@ namespace Application.User
             {
                 var user = await _userManager.FindByEmailAsync(request.Email) ?? 
                            throw new LoginException(LoginStatusCodes.UserNotFound, "Указанный пользователь не найден.");
+
+                if (user == null)
+                {
+                    /// ?????
+                }
 
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
 

@@ -1,6 +1,6 @@
-﻿using Domain;
+﻿using Application.Interfaces;
+using Domain;
 using MediatR;
-using Persistence;
 using System.Threading;
 using System.Threading.Tasks;
 

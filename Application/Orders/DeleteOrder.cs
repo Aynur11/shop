@@ -2,7 +2,7 @@
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Persistence;
+using Application.Interfaces;
 
 namespace Application.Orders
 {

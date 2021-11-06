@@ -5,15 +5,17 @@ VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{DEAEC633-F5B1-4D4D-BD66-59D2FFFE03E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "API\API.csproj", "{1BBAC79C-7F99-4926-8B1E-76BA36263BEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API", "API\API.csproj", "{1BBAC79C-7F99-4926-8B1E-76BA36263BEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Persistence", "Persistence\Persistence.csproj", "{28A3E4CB-AFE5-4E58-AAFC-AA29AB4CA949}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "Persistence\Persistence.csproj", "{28A3E4CB-AFE5-4E58-AAFC-AA29AB4CA949}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{1724C2BD-3AE5-461F-826B-31EA7B02AF9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{1724C2BD-3AE5-461F-826B-31EA7B02AF9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{FD9AD67A-E57F-4795-8F19-76619E8E2BE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\Application.csproj", "{FD9AD67A-E57F-4795-8F19-76619E8E2BE4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinClient", "WinClient\WinClient.csproj", "{AC143CC5-A5EB-4980-811B-9F469661E13D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinClient", "WinClient\WinClient.csproj", "{AC143CC5-A5EB-4980-811B-9F469661E13D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{5EAF4FE7-C230-4AD8-A0C1-7A5C5747EFE8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{AC143CC5-A5EB-4980-811B-9F469661E13D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC143CC5-A5EB-4980-811B-9F469661E13D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC143CC5-A5EB-4980-811B-9F469661E13D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EAF4FE7-C230-4AD8-A0C1-7A5C5747EFE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EAF4FE7-C230-4AD8-A0C1-7A5C5747EFE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EAF4FE7-C230-4AD8-A0C1-7A5C5747EFE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EAF4FE7-C230-4AD8-A0C1-7A5C5747EFE8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

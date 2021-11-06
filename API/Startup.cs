@@ -1,6 +1,8 @@
 using Application.Core;
+using Application.Interfaces;
 using Application.Orders;
 using Domain;
+using Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,7 +43,8 @@ namespace API
 
             services.AddMediatR(typeof(GetAll.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
-            
+            services.AddScoped<IJwtService, JwtService>();
+
             var builder = services.AddIdentityCore<ApplicationUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
