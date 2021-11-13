@@ -5,6 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
 using Microsoft.AspNetCore.Identity;
+using Application.Interfaces;
+using AutoMapper;
+using Application.DTO;
 
 namespace Application.User
 {
@@ -29,10 +32,18 @@ namespace Application.User
         {
             private readonly UserManager<ApplicationUser> _userManager;
             private readonly SignInManager<ApplicationUser> _signInManager;
-            public Handler(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+            private readonly IMapper _mapper;
+            private readonly IJwtService _jwtService;
+            public Handler(
+                UserManager<ApplicationUser> userManager, 
+                SignInManager<ApplicationUser> signInManager,
+                IMapper mapper,
+                IJwtService jwtService)
             {
                 _userManager = userManager;
                 _signInManager = signInManager;
+                _mapper = mapper;
+                _jwtService = jwtService;
             }
 
             public async Task<ApplicationUser> Handle(Query request, CancellationToken cancellationToken)
@@ -46,6 +57,9 @@ namespace Application.User
                 }
 
                 var signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
+
+                var userDto = _mapper.Map<UserDto>(user);
+                userDto.Token = _jwtService.Create(user);
 
                 if (signInResult.Succeeded)
                 {
