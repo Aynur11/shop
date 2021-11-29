@@ -24,6 +24,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<List<ProductDto>> GetProductsAsync()
         {
+            throw new System.Exception("Это тестовая ошибка.");
             GetAllProducts.Handler handler = new GetAllProducts.Handler(_context, _mapper);
             return await handler.Handle(new GetAllProducts.Query(), new CancellationToken());
         }

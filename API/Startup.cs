@@ -1,3 +1,4 @@
+using API.Middlewares;
 using Application.Core;
 using Application.Interfaces;
 using Application.Orders;
@@ -61,6 +62,8 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
+
+            app.UserExceptionHandlerMiddleware();
 
             app.UseHttpsRedirection();
 
