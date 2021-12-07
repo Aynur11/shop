@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CSharpFunctionalExtensions;
+using System;
 using System.Collections.Generic;
 
 namespace Domain
@@ -6,9 +7,8 @@ namespace Domain
     /// <summary>
     /// Заказ.
     /// </summary>
-    public class Order
+    public class Order : Entity<int>
     {
-        public int Id { get; set; }
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
         public List<Product> Products { get; set; }
         public DateTime OrderTime { get; set; }

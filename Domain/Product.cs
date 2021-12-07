@@ -1,13 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using CSharpFunctionalExtensions;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
     /// <summary>
     /// Продукт (товар), который в продаже.
     /// </summary>
-    public class Product
+    public class Product : Entity<int>
     {
-        public int Id { get; set; }
         public int Article { get; set; }
         public string Name { get; set; }
         public string ImagePath { get; set; }
