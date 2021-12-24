@@ -13,6 +13,17 @@ namespace Persistence
         public DbSet<Product> Products { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder
+                .Entity<Product>(e =>
+                {
+                    e.Property(p => p.QuantityInStock)
+                    .HasConversion(p => p.Value, p => ProductQuantity.Create(p).Value);
+                })
+                .Entity<OrderItem>(e =>
+                {
+                    e.Property(p => p.Quantity)
+                    .HasConversion(p => p.Value, p => ProductQuantity.Create(p).Value);
+                });
             base.OnModelCreating(builder);
         }
     }

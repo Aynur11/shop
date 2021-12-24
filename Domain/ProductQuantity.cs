@@ -11,6 +11,8 @@ namespace Domain
             _value = value;
         }
 
+        public int Value => _value;
+
         public static Result<ProductQuantity> Create(int value)
         {
             if (value < 0)

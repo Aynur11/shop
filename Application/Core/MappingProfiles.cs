@@ -8,7 +8,8 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<Product, Product>();
+            CreateMap<Product, ProductDto>();
+            CreateMap<ProductDto, Product>();
             CreateMap<Order, OrderDto>();
             CreateMap<FirstLevelIconSection, FirstLevelIconSectionDto>();
             CreateMap<FirstLevelImageSection, FirstLevelImageSectionDto>();
