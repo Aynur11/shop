@@ -10,7 +10,7 @@ using Application.Interfaces;
 
 namespace Application.Orders
 {
-    public class GetAll
+    public class GetAllOrders
     {
         public class Query : IRequest<List<OrderDto>> { }
 

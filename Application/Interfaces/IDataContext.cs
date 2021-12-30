@@ -10,6 +10,7 @@ namespace Application.Interfaces
     {
         DbSet<Order> Orders { get; set; }
         DbSet<Product> Products { get; set; }
+        DbSet<FirstLevelIconSection> FirstLevelIconSections { get; set; }
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         EntityEntry<TEntity> Update<TEntity>(TEntity entity) where TEntity : class;
     }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20211230203734_FirstLevelIconSection")]
+    partial class FirstLevelIconSection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +104,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FirstLevelIconSections");
+                    b.ToTable("FirstLevelIconSection");
                 });
 
             modelBuilder.Entity("Domain.FirstLevelImageSection", b =>
@@ -112,7 +114,7 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("FirstLevelIconSectionId")
+                    b.Property<int?>("FirstLevelIconSectionId")
                         .HasColumnType("int");
 
                     b.Property<string>("ImagePath")
@@ -121,9 +123,14 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SecondLevelSectionId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FirstLevelIconSectionId");
+
+                    b.HasIndex("SecondLevelSectionId");
 
                     b.ToTable("FirstLevelImageSection");
                 });
@@ -178,6 +185,12 @@ namespace Persistence.Migrations
                     b.Property<int>("Article")
                         .HasColumnType("int");
 
+                    b.Property<int?>("FirstLevelIconSectionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FirstLevelImageSectionId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -195,6 +208,10 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FirstLevelIconSectionId");
+
+                    b.HasIndex("FirstLevelImageSectionId");
+
                     b.HasIndex("OrderId");
 
                     b.HasIndex("SecondLevelSectionId");
@@ -209,9 +226,6 @@ namespace Persistence.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("FirstLevelImageSectionId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -219,9 +233,6 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("FirstLevelImageSectionId")
-                        .IsUnique();
 
                     b.ToTable("SecondLevelSection");
                 });
@@ -359,13 +370,15 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.FirstLevelImageSection", b =>
                 {
-                    b.HasOne("Domain.FirstLevelIconSection", "FirstLevelIconSection")
-                        .WithMany("FirstLevelImageSections")
-                        .HasForeignKey("FirstLevelIconSectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("Domain.FirstLevelIconSection", null)
+                        .WithMany("FirstLevelImageSection")
+                        .HasForeignKey("FirstLevelIconSectionId");
 
-                    b.Navigation("FirstLevelIconSection");
+                    b.HasOne("Domain.SecondLevelSection", "SecondLevelSection")
+                        .WithMany()
+                        .HasForeignKey("SecondLevelSectionId");
+
+                    b.Navigation("SecondLevelSection");
                 });
 
             modelBuilder.Entity("Domain.OrderItem", b =>
@@ -385,6 +398,14 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Product", b =>
                 {
+                    b.HasOne("Domain.FirstLevelIconSection", "FirstLevelIconSection")
+                        .WithMany()
+                        .HasForeignKey("FirstLevelIconSectionId");
+
+                    b.HasOne("Domain.FirstLevelImageSection", "FirstLevelImageSection")
+                        .WithMany()
+                        .HasForeignKey("FirstLevelImageSectionId");
+
                     b.HasOne("Domain.Order", null)
                         .WithMany("Products")
                         .HasForeignKey("OrderId");
@@ -395,18 +416,11 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SecondLevelSection");
-                });
-
-            modelBuilder.Entity("Domain.SecondLevelSection", b =>
-                {
-                    b.HasOne("Domain.FirstLevelImageSection", "FirstLevelImageSection")
-                        .WithOne("SecondLevelSection")
-                        .HasForeignKey("Domain.SecondLevelSection", "FirstLevelImageSectionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("FirstLevelIconSection");
 
                     b.Navigation("FirstLevelImageSection");
+
+                    b.Navigation("SecondLevelSection");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -462,12 +476,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.FirstLevelIconSection", b =>
                 {
-                    b.Navigation("FirstLevelImageSections");
-                });
-
-            modelBuilder.Entity("Domain.FirstLevelImageSection", b =>
-                {
-                    b.Navigation("SecondLevelSection");
+                    b.Navigation("FirstLevelImageSection");
                 });
 
             modelBuilder.Entity("Domain.Order", b =>

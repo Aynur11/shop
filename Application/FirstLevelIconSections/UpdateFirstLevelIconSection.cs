@@ -4,13 +4,13 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Orders
+namespace Application.FirstLevelIconSections
 {
-    public class UpdateOrder
+    public class UpdateFirstLevelIconSection
     {
         public class Command : IRequest
         {
-            public Order Order { get; set; }
+            public FirstLevelIconSection FirstLevelIconSection { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -24,7 +24,7 @@ namespace Application.Orders
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                _context.Update(request.Order);
+                _context.Update(request.FirstLevelIconSection);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

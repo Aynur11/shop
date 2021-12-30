@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220101134329_FK")]
+    partial class FK
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,7 +104,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("FirstLevelIconSections");
+                    b.ToTable("FirstLevelIconSection");
                 });
 
             modelBuilder.Entity("Domain.FirstLevelImageSection", b =>
@@ -220,8 +222,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FirstLevelImageSectionId")
-                        .IsUnique();
+                    b.HasIndex("FirstLevelImageSectionId");
 
                     b.ToTable("SecondLevelSection");
                 });
@@ -360,7 +361,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.FirstLevelImageSection", b =>
                 {
                     b.HasOne("Domain.FirstLevelIconSection", "FirstLevelIconSection")
-                        .WithMany("FirstLevelImageSections")
+                        .WithMany("FirstLevelImageSection")
                         .HasForeignKey("FirstLevelIconSectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -401,8 +402,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.SecondLevelSection", b =>
                 {
                     b.HasOne("Domain.FirstLevelImageSection", "FirstLevelImageSection")
-                        .WithOne("SecondLevelSection")
-                        .HasForeignKey("Domain.SecondLevelSection", "FirstLevelImageSectionId")
+                        .WithMany()
+                        .HasForeignKey("FirstLevelImageSectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -462,12 +463,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.FirstLevelIconSection", b =>
                 {
-                    b.Navigation("FirstLevelImageSections");
-                });
-
-            modelBuilder.Entity("Domain.FirstLevelImageSection", b =>
-                {
-                    b.Navigation("SecondLevelSection");
+                    b.Navigation("FirstLevelImageSection");
                 });
 
             modelBuilder.Entity("Domain.Order", b =>

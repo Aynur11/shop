@@ -15,7 +15,7 @@ namespace WinClient.NTier.Common
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
         public IEnumerable GetErrors(string? propertyName) =>
-            propertyName == null && Errors.ContainsKey(propertyName) ?
+            propertyName != null && Errors.ContainsKey(propertyName) ?
             Errors[propertyName] :
             Enumerable.Empty<string>();
 

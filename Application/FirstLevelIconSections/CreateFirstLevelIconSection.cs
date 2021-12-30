@@ -6,13 +6,17 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Orders
+namespace Application.FirstLevelIconSections
 {
-    public class CreateProduct
+    public class CreateFirstLevelIconSection
     {
         public class Command : IRequest
         {
-            public OrderDto Order { get; set; }
+            public Command(FirstLevelIconSectionDto firstLevelIconSection)
+            {
+                FirstLevelIconSection = firstLevelIconSection;
+            }
+            public FirstLevelIconSectionDto FirstLevelIconSection { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -28,8 +32,8 @@ namespace Application.Orders
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var order = _mapper.Map<OrderDto, Order>(request.Order);
-                await _context.Orders.AddAsync(order, cancellationToken);
+                var section = _mapper.Map<FirstLevelIconSectionDto, FirstLevelIconSection>(request.FirstLevelIconSection);
+                await _context.FirstLevelIconSections.AddAsync(section, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

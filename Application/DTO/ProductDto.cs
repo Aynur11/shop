@@ -1,7 +1,4 @@
-﻿using Domain;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Application.DTO
+﻿namespace Application.DTO
 {
     /// <summary>
     /// Продукт (товар), который в продаже.
@@ -12,5 +9,7 @@ namespace Application.DTO
         public int Article { get; set; }
         public string Name { get; set; }
         public string ImagePath { get; set; }
+        public int SecondLevelSectionId { get; set; }
+        public int QuantityInStock { get; set; }
     }
 }

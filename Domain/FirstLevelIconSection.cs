@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using System.Collections.Generic;
 
 namespace Domain
 {
@@ -9,6 +10,6 @@ namespace Domain
     {
         public string Name { get; set; }
         public string IconPath { get; set; }
-        public FirstLevelImageSection FirstLevelImageSection { get; set; }
+        public List<FirstLevelImageSection>  FirstLevelImageSections { get; set; }
     }
-}
+}   

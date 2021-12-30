@@ -1,16 +1,15 @@
 ﻿using Application.Interfaces;
-using Domain;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.Orders
+namespace Application.FirstLevelIconSections
 {
-    public class UpdateOrder
+    public class DeleteFirstLevelIconSection
     {
         public class Command : IRequest
         {
-            public Order Order { get; set; }
+            public int Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -24,7 +23,8 @@ namespace Application.Orders
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                _context.Update(request.Order);
+                var section = await _context.FirstLevelIconSections.FindAsync(request.Id, cancellationToken);
+                _context.FirstLevelIconSections.Remove(section);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

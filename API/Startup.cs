@@ -1,4 +1,3 @@
-using API.Middlewares;
 using Application.Core;
 using Application.Interfaces;
 using Application.Orders;
@@ -42,7 +41,7 @@ namespace API
 
             services.AddTransient<IDataContext, DataContext>();
 
-            services.AddMediatR(typeof(GetAll.Handler).Assembly);
+            services.AddMediatR(typeof(GetAllOrders.Handler).Assembly);
             services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             services.AddScoped<IJwtService, JwtService>();
 

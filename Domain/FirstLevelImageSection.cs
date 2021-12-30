@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
@@ -9,6 +10,10 @@ namespace Domain
     {
         public string Name { get; set; }
         public string ImagePath { get; set; }
+
+        public int FirstLevelIconSectionId { get; set; }
+        [ForeignKey(nameof(FirstLevelIconSectionId))]
+        public FirstLevelIconSection FirstLevelIconSection { get; set; }
         public SecondLevelSection SecondLevelSection { get; set; }
     }
 }
