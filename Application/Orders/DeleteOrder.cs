@@ -1,8 +1,8 @@
-﻿using Domain;
+﻿using Application.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Interfaces;
+using Application.Exceptions;
 
 namespace Application.Orders
 {
@@ -24,7 +24,8 @@ namespace Application.Orders
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var order = await _context.Orders.FindAsync(request.Id, cancellationToken);
+                var order = await _context.Orders.FindAsync(request.Id, cancellationToken) ??
+                            throw new EntityNotFoundException($"Заказ {request.Id} не найден");
                 _context.Orders.Remove(order);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;

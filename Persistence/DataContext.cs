@@ -12,6 +12,9 @@ namespace Persistence
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<FirstLevelIconSection> FirstLevelIconSections { get; set; }
+        public DbSet<FirstLevelImageSection> FirstLevelImageSections { get; set; }
+        public DbSet<SecondLevelSection> SecondLevelSections { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder

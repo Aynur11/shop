@@ -1,16 +1,16 @@
-﻿using Application.DTO;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Application.DTO;
 using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Application.FirstLevelIconSections
+namespace Application.FirstLevelImageSections
 {
-    public class GetFirstLevelIconSection
+    public class GetFirstLevelImageSection
     {
-        public class Query : IRequest<FirstLevelIconSectionDto>
+        public class Query : IRequest<FirstLevelImageSectionDto>
         {
             public Query(int id)
             {
@@ -19,7 +19,7 @@ namespace Application.FirstLevelIconSections
             public int Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, FirstLevelIconSectionDto>
+        public class Handler : IRequestHandler<Query, FirstLevelImageSectionDto>
         {
             readonly IDataContext _context;
             readonly IMapper _mapper;
@@ -29,11 +29,11 @@ namespace Application.FirstLevelIconSections
                 _mapper = mapper;
             }
 
-            public async Task<FirstLevelIconSectionDto> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<FirstLevelImageSectionDto> Handle(Query request, CancellationToken cancellationToken)
             {
                 var order = await _context.FirstLevelIconSections.FindAsync(new object[] { request.Id }, cancellationToken) ??
-                    throw new EntityNotFoundException($"Раздел {request.Id} не найден");
-                return _mapper.Map<FirstLevelIconSectionDto>(order);
+                            throw new EntityNotFoundException($"Раздел {request.Id} не найден");
+                return _mapper.Map<FirstLevelImageSectionDto>(order);
             }
         }
     }

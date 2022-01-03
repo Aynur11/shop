@@ -4,9 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
 
-namespace Application.FirstLevelIconSections
+namespace Application.SecondLevelSections
 {
-    public class DeleteFirstLevelIconSection
+    public class DeleteSecondLevelSection
     {
         public class Command : IRequest
         {
@@ -28,9 +28,9 @@ namespace Application.FirstLevelIconSections
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var section = await _context.FirstLevelIconSections.FindAsync(new object[] { request.Id }, cancellationToken) ??
+                var section = await _context.SecondLevelSections.FindAsync(request.Id, cancellationToken) ??
                               throw new EntityNotFoundException($"Раздел {request.Id} не найден");
-                _context.FirstLevelIconSections.Remove(section);
+                _context.SecondLevelSections.Remove(section);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

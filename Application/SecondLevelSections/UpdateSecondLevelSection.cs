@@ -1,20 +1,20 @@
-﻿using Application.Interfaces;
+﻿using Application.DTO;
+using Application.Interfaces;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Exceptions;
 
-namespace Application.FirstLevelIconSections
+namespace Application.SecondLevelSections
 {
-    public class DeleteFirstLevelIconSection
+    public class UpdateSecondLevelSection
     {
         public class Command : IRequest
         {
-            public Command(int id)
+            public Command(SecondLevelSectionDto section)
             {
-                Id = id;
+                Section = section;
             }
-            public int Id { get; set; }
+            public SecondLevelSectionDto Section { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -28,9 +28,7 @@ namespace Application.FirstLevelIconSections
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var section = await _context.FirstLevelIconSections.FindAsync(new object[] { request.Id }, cancellationToken) ??
-                              throw new EntityNotFoundException($"Раздел {request.Id} не найден");
-                _context.FirstLevelIconSections.Remove(section);
+                _context.Update(request.Section);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }
