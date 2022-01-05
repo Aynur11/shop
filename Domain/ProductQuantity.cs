@@ -6,7 +6,7 @@ namespace Domain
     public class ProductQuantity : ValueObject
     {
         private readonly int _value;
-        public ProductQuantity(int value)
+        private ProductQuantity(int value)
         {
             _value = value;
         }

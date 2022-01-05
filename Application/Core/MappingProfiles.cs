@@ -1,4 +1,5 @@
 ﻿using Application.DTO;
+using Application.DTO.UpdateEntity;
 using AutoMapper;
 using Domain;
 
@@ -8,21 +9,33 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<Product, ProductDto>();
-            CreateMap<ProductDto, Product>();
+            CreateMap<UpdateProductDto, Product>();
+            //CreateMap<Product, ProductDto>();
+            //CreateMap<ProductDto, Product>().ForMember(
+            //        c => c.QuantityInStock, 
+            //        o => o.MapFrom(s => ProductQuantity.Create(s.QuantityInStock)));
 
+            CreateMap<UpdateOrderDto, Order>();
             CreateMap<Order, OrderDto>();
             CreateMap<OrderDto, Order>();
 
+            CreateMap<UpdateOrderItemDto, OrderItem>();
+            CreateMap<OrderItem, OrderItemDto>();
+            CreateMap<OrderItemDto, OrderItem>().ForMember(
+                c => c.Quantity,
+                o => o.MapFrom(s => ProductQuantity.Create(s.Quantity)));
+
+            CreateMap<UpdateFirstLevelIconSectionDto, FirstLevelIconSection>();
+            CreateMap<FirstLevelIconSectionDto, FirstLevelIconSection>();
             CreateMap<FirstLevelIconSection, FirstLevelIconSectionDto>();
-            CreateMap<FirstLevelIconSectionDto, FirstLevelIconSection>()
-                .ForMember(dest => dest.FirstLevelImageSections, opt => opt.Ignore());
 
-            CreateMap<FirstLevelImageSection, FirstLevelImageSectionDto>();
+            CreateMap<UpdateFirstLevelImageSectionDto, FirstLevelImageSection>();
             CreateMap<FirstLevelImageSectionDto, FirstLevelImageSection>();
+            CreateMap<FirstLevelImageSection, FirstLevelImageSectionDto>();
 
-            CreateMap<SecondLevelSection, SecondLevelSectionDto>();
+            CreateMap<UpdateSecondLevelSectionDto, SecondLevelSection>();
             CreateMap<SecondLevelSectionDto, SecondLevelSection>();
+            CreateMap<SecondLevelSection, SecondLevelSectionDto>();
         }
     }
 }

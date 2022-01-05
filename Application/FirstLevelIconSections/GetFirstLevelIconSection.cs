@@ -21,8 +21,8 @@ namespace Application.FirstLevelIconSections
 
         public class Handler : IRequestHandler<Query, FirstLevelIconSectionDto>
         {
-            readonly IDataContext _context;
-            readonly IMapper _mapper;
+            private readonly IDataContext _context;
+            private readonly IMapper _mapper;
             public Handler(IDataContext context, IMapper mapper)
             {
                 _context = context;
@@ -31,9 +31,9 @@ namespace Application.FirstLevelIconSections
 
             public async Task<FirstLevelIconSectionDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var order = await _context.FirstLevelIconSections.FindAsync(new object[] { request.Id }, cancellationToken) ??
+                var sections = await _context.FirstLevelIconSections.FindAsync(new object[] { request.Id }, cancellationToken) ??
                     throw new EntityNotFoundException($"Раздел {request.Id} не найден");
-                return _mapper.Map<FirstLevelIconSectionDto>(order);
+                return _mapper.Map<FirstLevelIconSectionDto>(sections);
             }
         }
     }

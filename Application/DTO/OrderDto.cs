@@ -9,9 +9,8 @@ namespace Application.DTO
     /// </summary>
     public class OrderDto
     {
-        //public int Id { get; set; }
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
-        public List<Product> Products { get; set; }
+        //public List<Product> Products { get; set; }
         public DateTime OrderTime { get; set; }
     }
 }

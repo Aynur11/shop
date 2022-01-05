@@ -1,10 +1,8 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Application.DTO;
-using Application.Interfaces;
-using AutoMapper;
+﻿using Application.Interfaces;
 using Domain;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.Products
 {
@@ -12,24 +10,25 @@ namespace Application.Products
     {
         public class Command : IRequest
         {
-            public ProductDto Product { get; set; }
+            public Command(Product product)
+            {
+                Product = product;
+            }
+            public Product Product { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly IDataContext _context;
-            readonly IMapper _mapper;
 
-            public Handler(IDataContext context, IMapper mapper)
+            public Handler(IDataContext context)
             {
                 _context = context;
-                _mapper = mapper;
             }
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var product = _mapper.Map<ProductDto, Product>(request.Product);
-                await _context.Products.AddAsync(product, cancellationToken);
+                await _context.Products.AddAsync(request.Product, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

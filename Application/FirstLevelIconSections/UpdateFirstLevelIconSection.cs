@@ -1,11 +1,12 @@
-﻿using System.Linq;
-using Application.DTO;
+﻿using Application.DTO.UpdateEntity;
+using Application.Exceptions;
 using Application.Interfaces;
-using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 using AutoMapper;
 using Domain;
+using MediatR;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Application.FirstLevelIconSections
 {
@@ -13,17 +14,17 @@ namespace Application.FirstLevelIconSections
     {
         public class Command : IRequest
         {
-            public Command(FirstLevelIconSectionDto section)
+            public Command(UpdateFirstLevelIconSectionDto section)
             {
                 Section = section;
             }
-            public FirstLevelIconSectionDto Section { get; set; }
+            public UpdateFirstLevelIconSectionDto Section { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly IDataContext _context;
-            readonly IMapper _mapper;
+            private readonly IMapper _mapper;
 
             public Handler(IDataContext context, IMapper mapper)
             {
@@ -33,9 +34,11 @@ namespace Application.FirstLevelIconSections
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                //FirstLevelIconSectionDto section = _context.FirstLevelIconSections.FirstOrDefault(e => e.Id == request.Section.Id)
-                
-                _context.Update(_mapper.Map<FirstLevelIconSectionDto, FirstLevelIconSection>(request.Section));
+                if (!_context.FirstLevelIconSections.Any(e => e.Id == request.Section.Id))
+                {
+                    throw new EntityNotFoundException($"Раздел {request.Section.Id} не найден");
+                }
+                _context.Update(_mapper.Map<UpdateFirstLevelIconSectionDto, FirstLevelIconSection>(request.Section));
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

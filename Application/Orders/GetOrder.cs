@@ -12,13 +12,17 @@ namespace Application.Orders
     {
         public class Query : IRequest<OrderDto>
         {
+            public Query(int id)
+            {
+                Id = id;
+            }
             public int Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, OrderDto>
         {
-            readonly IDataContext _context;
-            readonly IMapper _mapper;
+            private readonly IDataContext _context;
+            private readonly IMapper _mapper;
             public Handler(IDataContext context, IMapper mapper)
             {
                 _context = context;
@@ -27,7 +31,7 @@ namespace Application.Orders
 
             public async Task<OrderDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var order = await _context.Orders.FindAsync(request.Id, cancellationToken) ??
+                var order = await _context.Orders.FindAsync(new object[] { request.Id }, cancellationToken) ??
                     throw new EntityNotFoundException($"Заказ {request.Id} не найден");
                 return _mapper.Map<OrderDto>(order);
             }

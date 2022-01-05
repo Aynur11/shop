@@ -6,37 +6,34 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.SecondLevelSections
+namespace Application.OrderItems
 {
-    public class GetSecondLevelSection
+    public class GetOrderItem
     {
-        public class Query : IRequest<SecondLevelSectionDto>
+        public class Query : IRequest<OrderItemDto>
         {
             public Query(int id)
             {
                 Id = id;
             }
-
             public int Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, SecondLevelSectionDto>
+        public class Handler : IRequestHandler<Query, OrderItemDto>
         {
             private readonly IDataContext _context;
             private readonly IMapper _mapper;
-
             public Handler(IDataContext context, IMapper mapper)
             {
                 _context = context;
                 _mapper = mapper;
             }
 
-            public async Task<SecondLevelSectionDto> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<OrderItemDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var order = await _context.SecondLevelSections.FindAsync(new object[] { request.Id },
-                                cancellationToken) ??
+                var orderItems = await _context.OrderItems.FindAsync(new object[] { request.Id }, cancellationToken) ??
                             throw new EntityNotFoundException($"Раздел {request.Id} не найден");
-                return _mapper.Map<SecondLevelSectionDto>(order);
+                return _mapper.Map<OrderItemDto>(orderItems);
             }
         }
     }

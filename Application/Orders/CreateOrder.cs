@@ -8,17 +8,21 @@ using System.Threading.Tasks;
 
 namespace Application.Orders
 {
-    public class CreateProduct
+    public class CreateOrder
     {
         public class Command : IRequest
         {
+            public Command(OrderDto order)
+            {
+                Order = order;
+            }
             public OrderDto Order { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly IDataContext _context;
-            readonly IMapper _mapper;
+            private readonly IMapper _mapper;
 
             public Handler(IDataContext context, IMapper mapper)
             {

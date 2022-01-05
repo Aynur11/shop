@@ -1,27 +1,30 @@
-﻿using Application.Interfaces;
+﻿using Application.DTO.UpdateEntity;
+using Application.Exceptions;
+using Application.Interfaces;
 using AutoMapper;
 using Domain;
 using MediatR;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Application.FirstLevelImageSections
+namespace Application.OrderItems
 {
-    public class CreateElement<T1, T2>
+    public class UpdateOrderItem
     {
         public class Command : IRequest
         {
-            public Command(T1 section)
+            public Command(UpdateOrderItemDto orderItem)
             {
-                Section = section;
+                OrderItem = orderItem;
             }
-            public T1 Section { get; set; }
+            public UpdateOrderItemDto OrderItem { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
         {
             private readonly IDataContext _context;
-            readonly IMapper _mapper;
+            private readonly IMapper _mapper;
 
             public Handler(IDataContext context, IMapper mapper)
             {
@@ -31,8 +34,11 @@ namespace Application.FirstLevelImageSections
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var section = _mapper.Map<T1, T2>(request.Section);
-                //await _context.FirstLevelIconSections.AddAsync(section, cancellationToken);
+                if (!_context.OrderItems.Any(e => e.Id == request.OrderItem.Id))
+                {
+                    throw new EntityNotFoundException($"Элемент {request.OrderItem.Id} не найден");
+                }
+                _context.Update(_mapper.Map<UpdateOrderItemDto, UpdateOrderItem>(request.OrderItem));
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

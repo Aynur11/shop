@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence;
 
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220105182426_ModelsChanges")]
+    partial class ModelsChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,7 +165,9 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItems");
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItem");
                 });
 
             modelBuilder.Entity("Domain.Product", b =>
@@ -182,6 +186,9 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("QuantityInStock")
                         .HasColumnType("int");
 
@@ -189,6 +196,8 @@ namespace Persistence.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("SecondLevelSectionId");
 
@@ -213,7 +222,8 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FirstLevelImageSectionId");
+                    b.HasIndex("FirstLevelImageSectionId")
+                        .IsUnique();
 
                     b.ToTable("SecondLevelSections");
                 });
@@ -365,10 +375,22 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.Order", null)
                         .WithMany("Items")
                         .HasForeignKey("OrderId");
+
+                    b.HasOne("Domain.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Domain.Product", b =>
                 {
+                    b.HasOne("Domain.Order", null)
+                        .WithMany("Products")
+                        .HasForeignKey("OrderId");
+
                     b.HasOne("Domain.SecondLevelSection", "SecondLevelSection")
                         .WithMany("Product")
                         .HasForeignKey("SecondLevelSectionId")
@@ -381,8 +403,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.SecondLevelSection", b =>
                 {
                     b.HasOne("Domain.FirstLevelImageSection", "FirstLevelImageSection")
-                        .WithMany()
-                        .HasForeignKey("FirstLevelImageSectionId")
+                        .WithOne("SecondLevelSection")
+                        .HasForeignKey("Domain.SecondLevelSection", "FirstLevelImageSectionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -445,9 +467,16 @@ namespace Persistence.Migrations
                     b.Navigation("FirstLevelImageSections");
                 });
 
+            modelBuilder.Entity("Domain.FirstLevelImageSection", b =>
+                {
+                    b.Navigation("SecondLevelSection");
+                });
+
             modelBuilder.Entity("Domain.Order", b =>
                 {
                     b.Navigation("Items");
+
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Domain.SecondLevelSection", b =>

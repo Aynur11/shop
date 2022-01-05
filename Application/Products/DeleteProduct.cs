@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Application.Exceptions;
 using Application.Interfaces;
 using MediatR;
 
@@ -9,6 +10,10 @@ namespace Application.Products
     {
         public class Command : IRequest
         {
+            public Command(int id)
+            {
+                Id = id;
+            }
             public int Id { get; set; }
         }
 
@@ -23,7 +28,8 @@ namespace Application.Products
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var product = await _context.Products.FindAsync(request.Id, cancellationToken);
+                var product = await _context.Products.FindAsync(new object[] { request.Id }, cancellationToken) ??
+                              throw new EntityNotFoundException($"Продукт {request.Id} не найден");
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;

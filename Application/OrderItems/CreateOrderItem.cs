@@ -1,24 +1,22 @@
-﻿using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Application.DTO.UpdateEntity;
-using Application.Exceptions;
+﻿using Application.DTO;
 using Application.Interfaces;
 using AutoMapper;
 using Domain;
 using MediatR;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Application.Products
+namespace Application.OrderItems
 {
-    public class UpdateProduct
+    public class CreateOrderItem
     {
         public class Command : IRequest
         {
-            public Command(UpdateProductDto product)
+            public Command(OrderItemDto orderItem)
             {
-                Product = product;
+                OrderItem = orderItem;
             }
-            public UpdateProductDto Product { get; set; }
+            public OrderItemDto OrderItem { get; set; }
         }
 
         public class Handler : IRequestHandler<Command>
@@ -34,11 +32,8 @@ namespace Application.Products
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                if (!_context.Products.Any(e => e.Id == request.Product.Id))
-                {
-                    throw new EntityNotFoundException($"Продукт {request.Product.Id} не найден");
-                }
-                _context.Update(_mapper.Map<UpdateProductDto, Product>(request.Product));
+                var orderItem = _mapper.Map<OrderItemDto, OrderItem>(request.OrderItem);
+                await _context.OrderItems.AddAsync(orderItem, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

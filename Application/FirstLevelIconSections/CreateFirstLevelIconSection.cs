@@ -22,7 +22,7 @@ namespace Application.FirstLevelIconSections
         public class Handler : IRequestHandler<Command>
         {
             private readonly IDataContext _context;
-            readonly IMapper _mapper;
+            private readonly IMapper _mapper;
 
             public Handler(IDataContext context, IMapper mapper)
             {

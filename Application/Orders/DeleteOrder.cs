@@ -10,6 +10,10 @@ namespace Application.Orders
     {
         public class Command : IRequest
         {
+            public Command(int id)
+            {
+                Id = id;
+            }
             public int Id { get; set; }
         }
 
@@ -24,7 +28,7 @@ namespace Application.Orders
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var order = await _context.Orders.FindAsync(request.Id, cancellationToken) ??
+                var order = await _context.Orders.FindAsync(new object[] { request.Id }, cancellationToken) ??
                             throw new EntityNotFoundException($"Заказ {request.Id} не найден");
                 _context.Orders.Remove(order);
                 await _context.SaveChangesAsync(cancellationToken);

@@ -10,6 +10,10 @@ namespace Application.FirstLevelImageSections
     {
         public class Command : IRequest
         {
+            public Command(int id)
+            {
+                Id = id;
+            }
             public int Id { get; set; }
         }
 
@@ -24,7 +28,7 @@ namespace Application.FirstLevelImageSections
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var section = await _context.FirstLevelImageSections.FindAsync(request.Id, cancellationToken) ??
+                var section = await _context.FirstLevelImageSections.FindAsync(new object[] { request.Id }, cancellationToken) ??
                               throw new EntityNotFoundException($"Раздел {request.Id} не найден");
                 _context.FirstLevelImageSections.Remove(section);
                 await _context.SaveChangesAsync(cancellationToken);

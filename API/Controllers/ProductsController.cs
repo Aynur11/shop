@@ -1,12 +1,9 @@
-﻿using Application.DTO;
-using Application.FirstLevelIconSections;
-using Application.Interfaces;
-using Application.Products;
-using AutoMapper;
+﻿using Application.Products;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
+using Application.DTO.UpdateEntity;
 
 namespace API.Controllers
 {
@@ -14,31 +11,34 @@ namespace API.Controllers
     [Route("[controller]")]
     public class ProductsController : BaseApiController
     {
-        private readonly IDataContext _context;
-        private readonly IMapper _mapper;
-        public ProductsController(IDataContext context, IMapper mapper)
+        [HttpPost("AddProduct")]
+        public async Task AddProduct(Product product)
         {
-            _context = context;
-            _mapper = mapper;
+            await Mediator.Send(new CreateProduct.Command(product));
         }
 
-        [HttpGet]
-        public async Task<List<ProductDto>> GetProductsAsync()
+        [HttpDelete("DeleteProduct")]
+        public async Task DeleteProduct(int id)
         {
-            GetAllProducts.Handler handler = new GetAllProducts.Handler(_context, _mapper);
-            return await handler.Handle(new GetAllProducts.Query(), new CancellationToken());
+            await Mediator.Send(new DeleteProduct.Command(id));
         }
 
-        //[HttpPost]
-        //public async Task AddProduct(ProductDto product)
-        //{
-        //    CreateProduct.Handler handler = new CreateProduct.Handler(_context, _mapper);
-        //    CreateProduct.Command command = new CreateProduct.Command
-        //    {
-        //        Product = product
-        //    };
-        //    await handler.Handle(command, new CancellationToken());
-        //}
-       
+        [HttpGet("GetAllProduct")]
+        public async Task<List<Product>> GetAllProduct()
+        {
+            return await Mediator.Send(new GetAllProducts.Query());
+        }
+
+        [HttpGet("GetProduct/{id:int}")]
+        public async Task<Product> GetProduct(int id)
+        {
+            return await Mediator.Send(new GetProduct.Query(id));
+        }
+
+        [HttpPut("UpdateProduct")]
+        public async Task UpdateProduct(UpdateProductDto section)
+        {
+            await Mediator.Send(new UpdateProduct.Command(section));
+        }
     }
 }

@@ -4,9 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
 
-namespace Application.SecondLevelSections
+namespace Application.OrderItems
 {
-    public class DeleteSecondLevelSection
+    public class DeleteOrderItem
     {
         public class Command : IRequest
         {
@@ -28,9 +28,9 @@ namespace Application.SecondLevelSections
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var section = await _context.SecondLevelSections.FindAsync(new object[] { request.Id }, cancellationToken) ??
-                              throw new EntityNotFoundException($"Раздел {request.Id} не найден");
-                _context.SecondLevelSections.Remove(section);
+                var orderItem = await _context.OrderItems.FindAsync(new object[] { request.Id }, cancellationToken) ??
+                              throw new EntityNotFoundException($"Элемент {request.Id} не найден");
+                _context.OrderItems.Remove(orderItem);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

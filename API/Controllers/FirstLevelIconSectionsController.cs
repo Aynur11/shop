@@ -3,6 +3,7 @@ using Application.DTO;
 using Application.FirstLevelIconSections;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Application.DTO.UpdateEntity;
 
 namespace API.Controllers
 {
@@ -28,14 +29,14 @@ namespace API.Controllers
             return await Mediator.Send(new GetAllFirstLevelIconSections.Query());
         }
 
-        [HttpGet("GetFirstLevelIconSection/{id}")]
+        [HttpGet("GetFirstLevelIconSection/{id:int}")]
         public async Task<FirstLevelIconSectionDto> GetFirstLevelIconSection(int id)
         {
             return await Mediator.Send(new GetFirstLevelIconSection.Query(id));
         }
 
         [HttpPut("UpdateFirstLevelIconSection")]
-        public async Task UpdateFirstLevelIconSection(FirstLevelIconSectionDto section)
+        public async Task UpdateFirstLevelIconSection(UpdateFirstLevelIconSectionDto section)
         {
             await Mediator.Send(new UpdateFirstLevelIconSection.Command(section));
         }

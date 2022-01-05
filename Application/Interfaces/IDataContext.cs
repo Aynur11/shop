@@ -9,6 +9,7 @@ namespace Application.Interfaces
     public interface IDataContext
     {
         DbSet<Order> Orders { get; set; }
+        DbSet<OrderItem> OrderItems { get; set; }
         DbSet<Product> Products { get; set; }
         DbSet<FirstLevelIconSection> FirstLevelIconSections { get; set; }
         DbSet<FirstLevelImageSection> FirstLevelImageSections { get; set; }

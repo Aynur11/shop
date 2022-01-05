@@ -27,7 +27,7 @@ namespace Application.FirstLevelImageSections
 
             public async Task<List<FirstLevelImageSectionDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var sections = await _context.FirstLevelImageSections.ToListAsync(cancellationToken: cancellationToken);
+                var sections = await _context.FirstLevelImageSections.ToListAsync(cancellationToken);
                 return _mapper.Map<List<FirstLevelImageSection>, List<FirstLevelImageSectionDto>>(sections);
             }
         }
