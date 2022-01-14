@@ -9,11 +9,12 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<UpdateProductDto, Product>();
-            //CreateMap<Product, ProductDto>();
-            //CreateMap<ProductDto, Product>().ForMember(
-            //        c => c.QuantityInStock, 
-            //        o => o.MapFrom(s => ProductQuantity.Create(s.QuantityInStock)));
+            CreateMap<UpdateProductDto, Product>()
+                .ForMember(c => c.QuantityInStock, o => o.Ignore());
+            CreateMap<Product, ProductDto>()
+                .ForMember(c => c.QuantityInStock, o => o.Ignore());
+            CreateMap<ProductDto, Product>()
+                .ForMember(c => c.QuantityInStock, o => o.Ignore());
 
             CreateMap<UpdateOrderDto, Order>();
             CreateMap<Order, OrderDto>();

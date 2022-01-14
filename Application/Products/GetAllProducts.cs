@@ -6,14 +6,15 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.DTO;
 
 namespace Application.Products
 {
     public class GetAllProducts
     {
-        public class Query : IRequest<List<Product>> { }
+        public class Query : IRequest<List<ProductDto>> { }
 
-        public class Handler : IRequestHandler<Query, List<Product>>
+        public class Handler : IRequestHandler<Query, List<ProductDto>>
         {
             private readonly IDataContext _context;
             private readonly IMapper _mapper;
@@ -23,9 +24,10 @@ namespace Application.Products
                 _mapper = mapper;
             }
 
-            public async Task<List<Product>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<List<ProductDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Products.ToListAsync(cancellationToken: cancellationToken);
+                var products = await _context.Products.ToListAsync(cancellationToken: cancellationToken);
+                return _mapper.Map<List<Product>, List<ProductDto>>(products);
             }
         }
     }

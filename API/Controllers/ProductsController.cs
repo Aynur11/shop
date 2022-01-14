@@ -3,6 +3,7 @@ using Domain;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.DTO;
 using Application.DTO.UpdateEntity;
 
 namespace API.Controllers
@@ -12,7 +13,7 @@ namespace API.Controllers
     public class ProductsController : BaseApiController
     {
         [HttpPost("AddProduct")]
-        public async Task AddProduct(Product product)
+        public async Task AddProduct(ProductDto product)
         {
             await Mediator.Send(new CreateProduct.Command(product));
         }
@@ -24,13 +25,13 @@ namespace API.Controllers
         }
 
         [HttpGet("GetAllProduct")]
-        public async Task<List<Product>> GetAllProduct()
+        public async Task<List<ProductDto>> GetAllProduct()
         {
             return await Mediator.Send(new GetAllProducts.Query());
         }
 
         [HttpGet("GetProduct/{id:int}")]
-        public async Task<Product> GetProduct(int id)
+        public async Task<ProductDto> GetProduct(int id)
         {
             return await Mediator.Send(new GetProduct.Query(id));
         }

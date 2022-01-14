@@ -38,7 +38,10 @@ namespace Application.Products
                 {
                     throw new EntityNotFoundException($"Продукт {request.Product.Id} не найден");
                 }
-                _context.Update(_mapper.Map<UpdateProductDto, Product>(request.Product));
+
+                var product = _mapper.Map<UpdateProductDto, Product>(request.Product);
+                product.QuantityInStock = ProductQuantity.Create(request.Product.QuantityInStock).Value;
+                _context.Update(product);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;
             }

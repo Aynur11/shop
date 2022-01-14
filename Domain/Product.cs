@@ -12,9 +12,6 @@ namespace Domain
         public string Name { get; set; }
         public string ImagePath { get; set; }
         public int SecondLevelSectionId { get; set; }
-        //[ForeignKey(nameof(SecondLevelSectionId))]
-        //public SecondLevelSection SecondLevelSection { get; set; }
-
         public ProductQuantity QuantityInStock { get; set; }
     }
 }

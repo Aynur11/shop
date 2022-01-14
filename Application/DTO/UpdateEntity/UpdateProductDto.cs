@@ -12,6 +12,6 @@ namespace Application.DTO.UpdateEntity
         public string Name { get; set; }
         public string ImagePath { get; set; }
         public int SecondLevelSectionId { get; set; }
-        public ProductQuantity QuantityInStock { get; set; }
+        public int QuantityInStock { get; set; }
     }
 }
