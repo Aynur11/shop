@@ -1,8 +1,6 @@
-﻿using CSharpFunctionalExtensions;
-
-namespace Application.DTO
+﻿namespace Application.DTO
 {
-    public class OrderItemDto : Entity<int>
+    public class OrderItemDto
     {
         public int Quantity { get; set; }
         public int ProductId { get; set; }

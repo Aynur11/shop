@@ -16,15 +16,19 @@ namespace Application.Core
             CreateMap<ProductDto, Product>()
                 .ForMember(c => c.QuantityInStock, o => o.Ignore());
 
-            CreateMap<UpdateOrderDto, Order>();
-            CreateMap<Order, OrderDto>();
-            CreateMap<OrderDto, Order>();
+            CreateMap<UpdateOrderDto, Order>()
+                .ForMember(c => c.Items, o => o.Ignore());
+            CreateMap<Order, OrderDto>()
+                .ForMember(c => c.Items, o => o.Ignore());
+            CreateMap<OrderDto, Order>()
+                .ForMember(c => c.Items, o => o.Ignore());
 
-            CreateMap<UpdateOrderItemDto, OrderItem>();
-            CreateMap<OrderItem, OrderItemDto>();
-            CreateMap<OrderItemDto, OrderItem>().ForMember(
-                c => c.Quantity,
-                o => o.MapFrom(s => ProductQuantity.Create(s.Quantity)));
+            CreateMap<UpdateOrderItemDto, OrderItem>()
+                .ForMember(c => c.Quantity, o => o.Ignore());
+            CreateMap<OrderItem, OrderItemDto>()
+                .ForMember(c => c.Quantity, o => o.Ignore());
+            CreateMap<OrderItemDto, OrderItem>()
+                .ForMember(c => c.Quantity, o => o.Ignore());
 
             CreateMap<UpdateFirstLevelIconSectionDto, FirstLevelIconSection>();
             CreateMap<FirstLevelIconSectionDto, FirstLevelIconSection>();

@@ -26,8 +26,21 @@ namespace Application.Orders
 
             public async Task<List<OrderDto>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var orders = await _context.Orders.ToListAsync(cancellationToken: cancellationToken);
-                return _mapper.Map<List<Order>, List<OrderDto>>(orders);
+                var orders = await _context.Orders.Include(e => e.Items).ToListAsync(cancellationToken);
+                //var ordersDto = _mapper.Map<List<Order>, List<OrderDto>>(orders);
+                List<OrderDto> ordersDto = new();
+                foreach (var order in orders)
+                {
+                    var orderDto = _mapper.Map<Order, OrderDto>(order);
+                    foreach (var orderItem in order.Items)
+                    {
+                        var orderItemDto = _mapper.Map<OrderItem, OrderItemDto>(orderItem);
+                        orderItemDto.Quantity = orderItem.Quantity.Value;
+                        orderDto.Items.Add(orderItemDto);
+                    }
+                    ordersDto.Add(orderDto);
+                }
+                return ordersDto;
             }
         }
     }

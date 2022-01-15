@@ -5,6 +5,8 @@ using AutoMapper;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
+using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Orders
 {
@@ -31,9 +33,19 @@ namespace Application.Orders
 
             public async Task<OrderDto> Handle(Query request, CancellationToken cancellationToken)
             {
-                var order = await _context.Orders.FindAsync(new object[] { request.Id }, cancellationToken) ??
-                    throw new EntityNotFoundException($"Заказ {request.Id} не найден");
-                return _mapper.Map<OrderDto>(order);
+                var order = await _context.Orders
+                                .Include(e => e.Items)
+                                .FirstOrDefaultAsync(i => i.Id == request.Id, cancellationToken) ?? 
+                            throw new EntityNotFoundException($"Заказ {request.Id} не найден");
+
+                var orderDto = _mapper.Map<OrderDto>(order);
+                foreach (var item in order.Items)
+                {
+                    var orderItemDto = _mapper.Map<OrderItem, OrderItemDto>(item);
+                    orderItemDto.Quantity = item.Quantity.Value;
+                    orderDto.Items.Add(orderItemDto);
+                }
+                return orderDto;
             }
         }
     }

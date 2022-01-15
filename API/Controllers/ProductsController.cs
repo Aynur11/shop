@@ -13,9 +13,10 @@ namespace API.Controllers
     public class ProductsController : BaseApiController
     {
         [HttpPost("AddProduct")]
-        public async Task AddProduct(ProductDto product)
+        public async Task<IActionResult> AddProduct(ProductDto product)
         {
             await Mediator.Send(new CreateProduct.Command(product));
+            return Ok();
         }
 
         [HttpDelete("DeleteProduct")]

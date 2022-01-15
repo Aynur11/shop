@@ -3,6 +3,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Orders
 {
@@ -28,8 +29,16 @@ namespace Application.Orders
 
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
-                var order = await _context.Orders.FindAsync(new object[] { request.Id }, cancellationToken) ??
+                var order = await _context.Orders
+                    .Include(e => e.Items)
+                    .FirstOrDefaultAsync(i => i.Id == request.Id, cancellationToken) ?? 
                             throw new EntityNotFoundException($"Заказ {request.Id} не найден");
+
+                foreach (var orderItem in order.Items)
+                {
+                    _context.OrderItems.Remove(orderItem);
+                }
+                await _context.SaveChangesAsync(cancellationToken);
                 _context.Orders.Remove(order);
                 await _context.SaveChangesAsync(cancellationToken);
                 return Unit.Value;

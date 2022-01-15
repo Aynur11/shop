@@ -35,7 +35,7 @@ namespace Application.Products
             {
                 var product = await _context.Products.FindAsync(new object[] { request.Id }, cancellationToken) ??
                               throw new EntityNotFoundException($"Раздел {request.Id} не найден");
-                return _mapper.Map<Product, ProductDto>(product);
+                return _mapper.Map<ProductDto>(product);
             }
         }
     }
