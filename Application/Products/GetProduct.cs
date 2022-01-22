@@ -1,11 +1,10 @@
 ﻿using Application.DTO;
+using Application.Exceptions;
 using Application.Interfaces;
 using AutoMapper;
-using Domain;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Exceptions;
 
 namespace Application.Products
 {

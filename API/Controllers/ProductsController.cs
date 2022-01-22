@@ -1,10 +1,9 @@
-﻿using Application.Products;
-using Domain;
+﻿using Application.DTO;
+using Application.DTO.UpdateEntity;
+using Application.Products;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Application.DTO;
-using Application.DTO.UpdateEntity;
 
 namespace API.Controllers
 {
@@ -15,7 +14,15 @@ namespace API.Controllers
         [HttpPost("AddProduct")]
         public async Task<IActionResult> AddProduct(ProductDto product)
         {
-            await Mediator.Send(new CreateProduct.Command(product));
+            try
+            {
+                await Mediator.Send(new CreateProduct.Command(product));
+            }
+            catch
+            {
+                // Log.Print();
+                return BadRequest(product);
+            }
             return Ok();
         }
 

@@ -1,5 +1,6 @@
 ﻿using Application.DTO;
 using Application.DTO.UpdateEntity;
+using Application.DTO.User;
 using AutoMapper;
 using Domain;
 
@@ -29,6 +30,13 @@ namespace Application.Core
                 .ForMember(c => c.Quantity, o => o.Ignore());
             CreateMap<OrderItemDto, OrderItem>()
                 .ForMember(c => c.Quantity, o => o.Ignore());
+
+            CreateMap<UserRegistrationDto, ApplicationUser>()
+                .ForMember(c => c.UserName, o => o.MapFrom(s => s.DisplayName));
+            CreateMap<UserLoginDto, ApplicationUser>();
+            CreateMap<ApplicationUser, UserDto>();
+            CreateMap<UserDto, ApplicationUser>()
+                .ForMember(c => c.UserName, o => o.MapFrom(s => s.DisplayName));
 
             CreateMap<UpdateFirstLevelIconSectionDto, FirstLevelIconSection>();
             CreateMap<FirstLevelIconSectionDto, FirstLevelIconSection>();

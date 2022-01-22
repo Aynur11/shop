@@ -11,14 +11,14 @@ namespace Infrastructure
 {
     public class JwtService : IJwtService
     {
-        public string Create(ApplicationUser applicationUser) 
+        public string Create(ApplicationUser applicationUser, string secret) 
         {
-            var claims = new List<Claim>()
+            var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.NameId, applicationUser.Email)
             };
 
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(""));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha512Signature);
             var descriptor = new SecurityTokenDescriptor
             {
