@@ -1,6 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain
 {
@@ -14,7 +13,7 @@ namespace Domain
         public List<Product> Product { get; set; }
         public int FirstLevelImageSectionId { get; set; }
 
-        [ForeignKey(nameof(FirstLevelImageSectionId))]
+        //[ForeignKey(nameof(FirstLevelImageSectionId))]
         public FirstLevelImageSection FirstLevelImageSection { get; set; }
     }
 }

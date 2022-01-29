@@ -12,7 +12,8 @@ namespace Domain
         public string ImagePath { get; set; }
 
         public int FirstLevelIconSectionId { get; set; }
-        [ForeignKey(nameof(FirstLevelIconSectionId))]
+        //[ForeignKey(nameof(FirstLevelIconSectionId))]
         public FirstLevelIconSection FirstLevelIconSection { get; set; }
+        public SecondLevelSection SecondLevelSection { get; set; }
     }
 }

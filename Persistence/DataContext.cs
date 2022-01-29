@@ -29,6 +29,17 @@ namespace Persistence
                     e.Property(p => p.Quantity)
                     .HasConversion(p => p.Value, p => ProductQuantity.Create(p).Value);
                 });
+
+            builder.Entity<FirstLevelImageSection>()
+                .HasOne(f => f.FirstLevelIconSection)
+                .WithMany(f => f.FirstLevelImageSections)
+                .HasForeignKey(f => f.FirstLevelIconSectionId);
+
+            builder.Entity<SecondLevelSection>()
+                .HasOne(f => f.FirstLevelImageSection)
+                .WithOne(f => f.SecondLevelSection)
+                .HasForeignKey<FirstLevelImageSection>(f => f.Id);
+            
             base.OnModelCreating(builder);
         }
     }
