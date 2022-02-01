@@ -7,7 +7,12 @@ namespace Persistence
 {
     public class DataContext : IdentityDbContext<ApplicationUser>, IDataContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
+        {
+            // Использовать для пересоздания БД.
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
+        }
 
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }

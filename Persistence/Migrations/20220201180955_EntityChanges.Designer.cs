@@ -10,8 +10,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220128154602_RemovedFkAttribute")]
-    partial class RemovedFkAttribute
+    [Migration("20220201180955_EntityChanges")]
+    partial class EntityChanges
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

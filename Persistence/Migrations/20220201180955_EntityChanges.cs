@@ -2,7 +2,7 @@
 
 namespace Persistence.Migrations
 {
-    public partial class RemovedFkAttribute : Migration
+    public partial class EntityChanges : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
