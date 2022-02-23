@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WinClient.LoginPage;
 
 namespace WinClient
 {
@@ -23,6 +25,25 @@ namespace WinClient
         public MainWindow()
         {
             InitializeComponent();
+            Frame.Navigate(new Login(this));
+        }
+
+        public enum Pages
+        {
+            login,
+            registration
+        }
+
+        public void OpenPage(Pages page)
+        {
+            switch (page)
+            {
+                case Pages.login:
+                    Frame.Navigate(new Login(this));
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
